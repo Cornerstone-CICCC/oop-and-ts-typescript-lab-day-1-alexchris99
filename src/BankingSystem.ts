@@ -1,5 +1,4 @@
 // 🏦 Create a banking system where users can create accounts, deposit, withdraw, and check their balance.
-// 1. Implement a function `createAccount` that adds a new account to the `accounts` array. It should return a `BankAccount` object.
 // 2. Implement a function `processTransaction` that allows deposits and withdrawals and stores them in the transactions array. It should return a string.
 // 3. Implement a function `getBalance` that returns the balance of a given account number.
 // 4. Implement a function `getTransactionHistory` that returns the list of transactions for an account.
@@ -7,8 +6,8 @@
 // 6. Implement a function `closeAccount` that removes an account from the array and returns a confirmation string.
 
 enum TransactionType {
-  Deposit,
-  Withdraw
+  Deposit = "Deposit" ,
+  Withdraw = "Withdraw"
 }
 
 type Transaction = {
@@ -26,30 +25,77 @@ type BankAccount = {
   transactions: Transaction[]
 }
 
-const accounts: BankAccount[] = [];
+let accounts: BankAccount[] = [];
 
-function createAccount(accountNo, firstname, lastname, initialDeposit, isActive = true) {
-
+// 1. Implement a function `createAccount` that adds a new account to the `accounts` array. It should return a `BankAccount` object.
+function createAccount(accountNo:number, firstname: string, lastname:string, initialDeposit:number, isActive = true): BankAccount[]{
+  accounts.push(
+    {
+      accountNo: accountNo,
+      firstname: firstname,
+      lastname: lastname,
+      balance: initialDeposit,
+      isActive: isActive,
+      transactions: []
+    }
+  )
+  return accounts
 }
 
-function processTransaction(accountNo, amount, transactionType) {
-
+// 2. Implement a function `processTransaction` that allows deposits and withdrawals and stores them in the transactions array. It should return a string.
+function processTransaction(accountNo: number, amount: number, transactionType: TransactionType): string {
+  accounts.forEach(account=>{
+    if(account.accountNo = accountNo){
+      if(transactionType == "Withdraw"){
+        if(account.balance > amount){
+          account.balance-=amount
+          account.transactions.push({ accountNo:accountNo,amount: amount,type: transactionType})
+        }else{
+          return "Insuficient Founds"
+        }
+      }else{
+        account.balance+=amount
+        account.transactions.push({ accountNo:accountNo,amount: amount,type: transactionType}) 
+      }
+    }""  
+  })
+  return "Action Completed"
 }
 
-function getBalance(accountNo) {
-
+// 3. Implement a function `getBalance` that returns the balance of a given account number.
+function getBalance(accountNo: number): number {
+  let balance = 0
+  accounts.forEach(account => {
+    account.accountNo == accountNo ? balance = account.balance : ""
+  })
+  return balance
 }
 
-function getTransactionHistory(accountNo) {
-
+// 4. Implement a function `getTransactionHistory` that returns the list of transactions for an account.
+function getTransactionHistory(accountNo: number) {
+  let transactions
+  accounts.forEach(account =>{
+    account.accountNo == accountNo ? transactions = account.transactions : ""
+  })
+  return transactions
 }
 
-function checkActiveStatus(accountNo) {
-
+// 5. Implement a function `checkActiveStatus` that returns the active status of an account number.
+function checkActiveStatus(accountNo: number) {
+  let status
+  accounts.forEach(account => {
+    account.accountNo == accountNo ? status = account.isActive : ""
+  })
+  return status
 }
 
-function closeAccount(accountNo) {
-
+// 6. Implement a function `closeAccount` that removes an account from the array and returns a confirmation string.
+function closeAccount(accountNo:number):string {
+  accounts = accounts.filter(account =>{
+    account.accountNo !== accountNo ? account : ""
+  })
+  console.log(accounts)
+  return "Account removed"
 }
 
 // Test cases (students should add more)

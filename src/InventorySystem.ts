@@ -5,24 +5,43 @@
 // 4. Create a function called updateStock which updates the quantity of an item. The return needs to be a string.
 // 5. Create a function called checkStock which returns true if the item is available and false otherwise.
 
+// 1. Create a tuple type called ItemDetails which holds (string, number, boolean) representing itemName, quantity, and isAvailable.
 type ItemDetails = [string, number, boolean]
 
+// 2. Create a type alias called InventoryItem which contains: itemId (number), details (ItemDetails)
 type InventoryItem = {
-
+    itemId: number,
+    details: ItemDetails
 }
 
-const inventory: InventoryItem[] = [];
+let inventory: InventoryItem[] = [];
 
-function addItem(itemId, itemName, quantity, isAvailable) {
-
+// 3. Create a function called addItem which adds an item to the inventory array. The function needs to return an InventoryItem object.
+function addItem(itemId: number, itemName: string, quantity: number, isAvailable: boolean): InventoryItem[] {
+    inventory.push({
+        itemId: itemId,
+        details: [itemName,quantity, isAvailable]
+    })
+    return inventory
 }
 
-function updateStock(itemId, quantity) {
-
+// 4. Create a function called updateStock which updates the quantity of an item. The return needs to be a string.
+function updateStock(itemId: number, quantity: number):string {
+    let message: string = ""
+    inventory.forEach(item => {
+        item.itemId == itemId ? item.details[1] = quantity : ""
+        message =`Stock updated for ${item.details[0]}, new quantity: ${item.details[1]}`
+    })
+    return message
 }
 
-function checkStock(itemId) {
-
+// 5. Create a function called checkStock which returns true if the item is available and false otherwise.
+function checkStock(itemId:number):boolean {
+    let message: boolean = false
+    inventory.forEach(item=>{
+        item.itemId == itemId ? item.details[2] == true ? message = true : message : ""
+    })
+    return message
 }
 
 // Test cases (Create more if needed)

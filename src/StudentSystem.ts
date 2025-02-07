@@ -6,28 +6,62 @@
 // 5. Create a function called addSubject which adds a subject to a student’s subjects array. The return needs to be a string.
 // 6. Create a function called getStudent which returns a student’s information based on studentId.
 
+// 1. Create a union literal type called StudentStatus that can be "active", "graduated", or "dropped".
 type StudentStatus = "active" | "graduated" | "dropped";
 
+// 2. Create a type alias called Student which contains: studentId (number), name (string), age (number), subjects (string[]), status (StudentStatus).
 type Student = {
+    studentId: number,
+    name: string,
+    age: number,
+    subjects:string[]
+    status: StudentStatus
 
 }
 
-const students: Student[] = [];
+let students: Student[] = [];
 
-function addStudent(studentId, name, age, subjects, status) {
 
+// 3. Create a function called addStudent which will add a student to the students array. The function needs to return a Student object.
+function addStudent(studentId: number, name: string, age: number, subjects: string[], status:StudentStatus) :Student[] {
+    students.push({
+        studentId: studentId,
+        name: name,
+        age: age,
+        subjects: subjects,
+        status: status
+    })
+
+    return students
 }
 
-function updateStatus(studentId, status) {
-
+// 4. Create a function called updateStatus which updates a student's status. The return needs to be a string.
+function updateStatus(studentId: number, status: StudentStatus): string {
+    let message: string = ""
+    students.forEach(student =>{
+        student.studentId == studentId ? student.status = status : ""
+        message = `${student.name} has ${status}`
+    })
+    return message
 }
 
-function addSubject(studentId, subject) {
-
+// 5. Create a function called addSubject which adds a subject to a student’s subjects array. The return needs to be a string.
+function addSubject(studentId: number, subject: string): string {
+    let message: string = ""
+    students.forEach(studend =>{
+        studend.studentId == studentId ? studend.subjects.push(subject) : ""
+        message = `${subject} added to ${studend.name} subjects`
+    })
+    return message
 }
 
-function getStudent(studentId) {
-
+// 6. Create a function called getStudent which returns a student’s information based on studentId.
+function getStudent(studentId: number): {} {
+    let studendInfo: {} = {}
+    students.forEach(student =>{
+        student.studentId == studentId ? studendInfo = student : "'"
+    })
+    return studendInfo
 }
 
 // Test cases (Create more if needed)
